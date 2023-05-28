@@ -12,6 +12,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 import javax.swing.JOptionPane;
 
 /**
@@ -48,6 +49,7 @@ public class UI extends javax.swing.JFrame {
         direct = new javax.swing.JRadioButton();
         wegt = new javax.swing.JRadioButton();
         weight = new javax.swing.JTextField();
+        shotest = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         alert = new javax.swing.JLabel();
 
@@ -146,6 +148,14 @@ public class UI extends javax.swing.JFrame {
             }
         });
 
+        shotest.setText("Shotest path");
+        shotest.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        shotest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                shotestActionPerformed(evt);
+            }
+        });
+
         jDesktopPane2.setLayer(node, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane2.setLayer(edg, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane2.setLayer(jTextField1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -156,6 +166,7 @@ public class UI extends javax.swing.JFrame {
         jDesktopPane2.setLayer(direct, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane2.setLayer(wegt, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jDesktopPane2.setLayer(weight, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jDesktopPane2.setLayer(shotest, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jDesktopPane2Layout = new javax.swing.GroupLayout(jDesktopPane2);
         jDesktopPane2.setLayout(jDesktopPane2Layout);
@@ -184,7 +195,10 @@ public class UI extends javax.swing.JFrame {
                                 .addComponent(dfs, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(wegt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(weight))))
+                            .addComponent(weight)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(shotest, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jDesktopPane2Layout.setVerticalGroup(
@@ -206,11 +220,13 @@ public class UI extends javax.swing.JFrame {
                 .addComponent(dfs)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(bfs)
-                .addGap(50, 50, 50)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(shotest)
+                .addGap(16, 16, 16)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -315,11 +331,11 @@ public class UI extends javax.swing.JFrame {
                                         Integer.parseInt(this.weight.getText());
                                     } catch (Exception e) {
                                         this.alert.setForeground(Color.red);
-                                        this.alert.setText("Please enter a number");
+                                        this.alert.setText("Please enter a weight");
                                     }
                                     int value = Integer.parseInt(this.weight.getText());
                                     this.graph.addEdge(i, j, value);
-                                    this.weight.setText("weight");
+                                    this.weight.setText("");
                                     this.drawArrow(this.firstNode.getX() + 10, this.firstNode.getY() + 10, this.secondNode.getX() + 2, this.secondNode.getY() + 2);
                                     drawWeight(value, this.firstNode.getX() + 10, this.firstNode.getY() + 10, this.secondNode.getX() + 2, this.secondNode.getY() + 2);
                                 } else {
@@ -333,12 +349,13 @@ public class UI extends javax.swing.JFrame {
                                         Integer.parseInt(this.weight.getText());
                                     } catch (Exception e) {
                                         this.alert.setForeground(Color.red);
-                                        this.alert.setText("Please enter a number");
+                                        this.alert.setText("Please enter a weight");
                                     }
                                     int value = Integer.parseInt(this.weight.getText());
                                     this.graph.addEdge(i, j, value);
                                     this.graph.addEdge(j, i, value);
-                                    this.weight.setText("weight");
+                                    this.weight.setText("");
+
                                     this.drawEdge(this.firstNode, this.secondNode);
                                     drawWeight(value, this.firstNode.getX() + 10, this.firstNode.getY() + 10, this.secondNode.getX() + 8, this.secondNode.getY() + 8);
                                 } else {
@@ -366,7 +383,7 @@ public class UI extends javax.swing.JFrame {
                         clickCounter = 0;
                     } else {
                         clickCounter = 1;
-                        this.i = this.link.findIndex(this.firstNode);
+                        // this.i = this.link.findIndex(this.firstNode);
                     }
 
                 } else if (clickCounter == 1) {
@@ -393,7 +410,7 @@ public class UI extends javax.swing.JFrame {
                         clickCounter = 0;
                     } else {
                         clickCounter = 1;
-                        this.i = this.link.findIndex(this.firstNode);
+                        // this.i = this.link.findIndex(this.firstNode);
                     }
 
                 } else if (clickCounter == 1) {
@@ -405,6 +422,25 @@ public class UI extends javax.swing.JFrame {
                     } else {
                         BFS(this.graph.matrix, firstNode, secondNode);
                     }
+                }
+            }
+        }
+        else if(this.shotest.isSelected()){
+            if (nodeCounter == 0) {
+                this.alert.setForeground(Color.red);
+                this.alert.setText("Please add a node first");
+            } else {
+                if (clickCounter == 0) {
+                    // get the first node
+                    this.firstNode = this.link.findVertex(x, y);
+                    if (this.firstNode == null) {
+                        clickCounter = 0;
+                    } else {
+                        clickCounter = 1;
+                        this.i = this.link.findIndex(this.firstNode);
+                        Dijkstra(this.graph.matrix, i);
+                    }
+
                 }
             }
         }
@@ -460,6 +496,9 @@ public class UI extends javax.swing.JFrame {
         if (dfs.isSelected()) {
             dfs.setSelected(false);
         }
+        if (this.shotest.isSelected()){
+            this.shotest.setSelected(false);
+        }
     }//GEN-LAST:event_edgActionPerformed
 
     private void dfsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dfsActionPerformed
@@ -474,6 +513,9 @@ public class UI extends javax.swing.JFrame {
         if (edg.isSelected()) {
             edg.setSelected(false);
         }
+        if (this.shotest.isSelected()){
+            this.shotest.setSelected(false);
+        }
     }//GEN-LAST:event_dfsActionPerformed
 
     private void bfsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bfsActionPerformed
@@ -486,6 +528,9 @@ public class UI extends javax.swing.JFrame {
         }
         if (edg.isSelected()) {
             edg.setSelected(false);
+        }
+        if (this.shotest.isSelected()){
+            this.shotest.setSelected(false);
         }
     }//GEN-LAST:event_bfsActionPerformed
 
@@ -501,7 +546,7 @@ public class UI extends javax.swing.JFrame {
 
     private void weightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weightActionPerformed
         // TODO add your handling code here:
-
+        
     }//GEN-LAST:event_weightActionPerformed
 
     private void weightMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_weightMouseClicked
@@ -518,6 +563,24 @@ public class UI extends javax.swing.JFrame {
             this.weight.setVisible(false);
         }
     }//GEN-LAST:event_wegtMouseClicked
+
+    private void shotestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_shotestActionPerformed
+        // TODO add your handling code here:
+        if (dfs.isSelected()) {
+            dfs.setSelected(false);
+        }
+        if (node.isSelected()) {
+            node.setSelected(false);
+        }
+        if (edg.isSelected()) {
+            edg.setSelected(false);
+        }
+        
+        if (bfs.isSelected()) {
+            bfs.setSelected(false);
+        }
+
+    }//GEN-LAST:event_shotestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -566,6 +629,7 @@ public class UI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JRadioButton node;
+    private javax.swing.JToggleButton shotest;
     private javax.swing.JRadioButton wegt;
     private javax.swing.JTextField weight;
     // End of variables declaration//GEN-END:variables
@@ -625,7 +689,7 @@ public class UI extends javax.swing.JFrame {
         g2d.drawOval(x, y, 32, 32);
         // sleep for 0.1 second
         try {
-            Thread.sleep(100);
+            Thread.sleep(200);
         } catch (InterruptedException ex) {
             System.out.println("Interrupted");
         }
@@ -637,7 +701,7 @@ public class UI extends javax.swing.JFrame {
         g.drawLine(x1, y1, x2, y2);
         // sleep for 0.3 second
         try {
-            Thread.sleep(300);
+            Thread.sleep(500);
         } catch (InterruptedException ex) {
             System.out.println("Interrupted");
         }
@@ -829,89 +893,128 @@ public class UI extends javax.swing.JFrame {
     //     this.alert.setText("No path found");
     //     return path;
     // }
+
     private void drawWeight(int value, int x1, int y1, int x2, int y2) {
         Graphics g = jPanel1.getGraphics();
-        g.setColor(Color.black);
-        g.drawString(Integer.toString(value), (x1 + x2) / 2, (y1 + y2) / 2);
+        Graphics2D g2d = (Graphics2D) g; // Cast to Graphics2D to access setStroke()
+
+        // draw the node circle with black border and white inside, border thickness 2
+        g2d.setColor(Color.blue);
+        g2d.setStroke(new BasicStroke(4));
+
+        g2d.drawString(Integer.toString(value), (x1 + x2) / 2, (y1 + y2) / 2);
     }
+
+    private void drawDistance(int value, int x, int y) {
+        Graphics g = jPanel1.getGraphics();
+        Graphics2D g2d = (Graphics2D) g; // Cast to Graphics2D to access setStroke()
+
+        // draw the node circle with black border and white inside, border thickness 2
+        g2d.setColor(Color.white);
+        g2d.setStroke(new BasicStroke(4));
+        
+        // remove the previous value use white color rectangle
+        g2d.fillRect(x, y - 15, 15, 28);
+
+
+        g2d.setColor(Color.red);
+        g2d.setStroke(new BasicStroke(4));
+
+        g2d.drawString(Integer.toString(value), x, y);
+
+    }
+
 
     // shortest path
 
-    private int djikstra(int[][] graph, int start, int end) {
-        int[] distance = new int[graph.length];
-        int[] parent = new int[graph.length];
-        int[] visited = new int[graph.length];
-        int min = 0;
-        int nextNode = 0;
-        // initialize distance, parent, visited
-        for (int i = 0; i < graph.length; i++) {
-            distance[i] = Integer.MAX_VALUE;
-            parent[i] = -1;
-            visited[i] = 0;
-        }
-        distance[start] = 0;
-        visited[start] = 1;
-        
-        for (int i = 0; i < graph.length; i++) {
-            min = Integer.MAX_VALUE;
-            for (int j = 0; j < graph.length; j++) {
-                if (min > distance[j] && visited[j] == 0) {
-                    min = distance[j];
-                    nextNode = j;
-                }
-            }
-            visited[nextNode] = 1;
-            for (int j = 0; j < graph.length; j++) {
-                if (visited[j] == 0) {
-                    if (distance[j] > distance[nextNode] + graph[nextNode][j]) {
-                        distance[j] = distance[nextNode] + graph[nextNode][j];
-                        parent[j] = nextNode;
-                    }
-                }
-            }
-        }
-        return distance[end];
-    }
-
+      //_____________________________Dijkstra use unSortedpriorityQueue____________________________
     public int[] dijkstra(int[][] graph, int start) {
-        // Khởi tạo dist là mảng các khoảng cách từ đỉnh bắt đầu đến các đỉnh khác
-        // Đỉnh ban đầu có khoảng cách bằng 0, còn lại có khoảng cách tạm thời là vô cùng
-        int[] dist = new int[graph.length];
+        int[] dist = new int[this.graph.getSize()];
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[start] = 0;
         
-        // visited là danh sách các đỉnh đã được duyệt qua
-        boolean[] visited = new boolean[graph.length];
+        boolean[] visited = new boolean[this.graph.getSize()];
 
         while (true) {
-            // Tìm đỉnh u chưa được duyệt qua gần bằng nhỏ nhất
             int u = -1;
-            for (int i = 0; i < graph.length; i++) {
+            for (int i = 0; i < this.graph.getSize(); i++) {
                 if (!visited[i] && (u == -1 || dist[i] < dist[u])) {
                     u = i;
                 }
             }
 
-            // Nếu không tìm được đỉnh u phù hợp, thoát vòng lặp
             if (u == -1) {
                 break;
             }
 
-            // Đánh dấu đỉnh u đã được duyệt qua
             visited[u] = true;
 
-            // Cập nhật khoảng cách từ đỉnh bắt đầu đến các đỉnh kề của u nếu cần
-            for (int v = 0; v < graph.length; v++) {
+            for (int v = 0; v < this.graph.getSize(); v++) {
                 if (graph[u][v] != 0) {
-                    int alt = dist[u] + graph[u][v];
-                    if (alt < dist[v]) {
-                        dist[v] = alt;
+                    int distance = dist[u] + graph[u][v];
+                    if (distance < dist[v]) {
+                        dist[v] = distance;
+                        this.firstNode = link.findVertex(u);
+                        this.secondNode = link.findVertex(v);
+                        drawVisitedEdge(firstNode.getX() + 10, firstNode.getY() + 10, secondNode.getX() + 8, secondNode.getY() + 8);
+                        drawDistance(distance, secondNode.getX() - 8, secondNode.getY() - 8);
+                    }
+                }
+            }
+        }
+        this.alert.setForeground(Color.green);
+        this.alert.setText("Solution:  " + solution(dist));
+        return dist;
+    }
+
+
+    //_____________________________Dijkstra use SortedpriorityQueue____________________________
+
+    public int[] Dijkstra(int[][] graph, int start){
+
+        int[] dist = new int[this.graph.getSize()]; 
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        SortedArrayPriorityQueue<Integer,Integer> priorityQueue = new SortedArrayPriorityQueue<Integer,Integer>( this.graph.getSize() );
+        // boolean[] visited = new boolean[this.graph.getSize()];
+        ArrayList<Integer> visited = new ArrayList<Integer>();
+        
+        dist[start] = 0;
+        
+
+        priorityQueue.insert(start, dist[start]);
+
+        while(visited.size() != this.graph.getSize()){
+            int u = (int) priorityQueue.removeMin().getKey();
+            visited.add(u);
+            drawVisitedEdge(firstNode.getX() + 10, firstNode.getY() + 10, secondNode.getX() + 8, secondNode.getY() + 8);
+
+            for (int v = 0; v < this.graph.getSize(); v++) {
+                if (graph[u][v] != 0) {
+                    int distance = dist[u] + graph[u][v];
+                    if (distance < dist[v]) {
+                        dist[v] = distance;
+                        this.firstNode = link.findVertex(u);
+                        this.secondNode = link.findVertex(v);
+                        drawVisitedEdge(firstNode.getX() + 10, firstNode.getY() + 10, secondNode.getX() + 8, secondNode.getY() + 8);
+                        drawDistance(distance, secondNode.getX() - 8, secondNode.getY() - 8);
+                        priorityQueue.insert(v, dist[v]);
                     }
                 }
             }
         }
 
+        this.alert.setForeground(Color.green);
+        this.alert.setText("Solution:  " + solution(dist));
         return dist;
+
+    }
+
+    private String solution(int[] value){
+        String result = "";
+        for (int i = 0; i < value.length; i++) {
+            result += "Node " + i + " : " + value[i] + "    ; ";
+        }
+        return result;
     }
 
 
