@@ -3,7 +3,7 @@
     + Cài đặt IDE để code Java (Netbeans, Eclipse, IntelliJ, ...)
 
 - Các bước để chạy chương trình:
-    + Chạy trực tiếp App bằng lệnh ```java -jar CTDL.jar``` trên terminal  (lưu ý cần đi vào thư mục dist của project) hoặc click vào file `CTDL.jar` để chạy chương trình
+    + Chạy trực tiếp App bằng lệnh ``` java -jar CTDL.jar ``` trên terminal  (lưu ý cần đi vào thư mục dist của project) hoặc click vào file `CTDL.jar` để chạy chương trình
     + Chạy bằng IDE: Mở project bằng IDE và chạy file CTDL.java
 
 - Cấu trúc thư mục code:
