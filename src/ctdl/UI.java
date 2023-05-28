@@ -438,7 +438,9 @@ public class UI extends javax.swing.JFrame {
                     } else {
                         clickCounter = 1;
                         this.i = this.link.findIndex(this.firstNode);
-                        Dijkstra(this.graph.matrix, i);
+                        // Dijkstra(this.graph.matrix, i);
+                        dijkstra(this.graph.matrix, i);
+                        
                     }
 
                 }
